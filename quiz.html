@@ -1,0 +1,79 @@
+<html>
+  <head>
+    <script>
+    function finish() {
+      var ext = '.html';
+      var results = new Array("none","Melissa","Todd","Jose");
+      var nums = new Array(4);
+      for(var i = 0; i < nums.length; i++) nums[i] = 0;
+      for(var i = 1; i <= 1; i++) {
+        var q = document.forms['quiz'].elements['question_'+i];
+        if(q[0].type=='checkbox') {
+          var n = 0;
+        }
+        for(var j = 0; j < q.length; j++) {
+          if(q[j].checked) {
+            var a = q[j].value.split(',');
+            for(var k = 0; k < a.length; k++) {
+              nums[a[k]]++;
+            }
+            if(q[j].type=='radio') break;
+            else n++;
+          }
+          if(j == q.length-1&&q[j].type=='radio') {nums[0]++;}
+        }
+        if(q[0].type=='checkbox'&&((document.forms['quiz'].elements['question_'+i+'_min']&&n<document.forms['quiz'].elements['question_'+i+'_min'].value)||(document.forms['quiz'].elements['question_'+i+'_max']&&n>document.forms['quiz'].elements['question_'+i+'_max'].value))) nums[0]++;
+      }
+      var j = new Array('0');
+      for (i in nums) if(nums[i]>nums[j[0]]){j=new Array(''+i);} else if(nums[i]==nums[j[0]])j[j.length] = i;
+      //var o = '';for(var i in results)o+=results[i]+'='+nums[i]+'\n';
+      //alert(o);
+      if(nums[0]!=0) {
+        alert('You missed or incorrectly answered '+nums[0]+' questions!');
+      }
+      else if(j[0]==0) {
+        alert('No result could be determined.');
+      }
+      else {
+        location = results[j[0]]+ext;
+      }
+    }
+    </script>
+  </head>
+  <body>
+    <form name="quiz" action="javascript:finish();">
+      <table width="100%" border="0" cellspacing="0" cellpadding="5">
+        <tr>
+          <td width="34%" class="text-white">
+            <font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+            <h1><strong>Are you up for bevs?</strong></h1>
+            </font>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-white">
+            <font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+            <input name="question_1" type="radio" value="1"> Yes
+            </font>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-white">
+            <font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+            <input name="question_1" type="radio" value="2"> No
+            </font>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-white">
+            <font size="2" face="Verdana, Arial, Helvetica, sans-serif">
+            <input name="question_1" type="radio" value="3"> Maybe
+            </font>
+          </td>
+        </tr>
+      </table>
+    <br /> <INPUT TYPE="submit" value="Finish">
+     <INPUT TYPE="reset" value="Reset">
+    </form>
+  </body>
+</html>
